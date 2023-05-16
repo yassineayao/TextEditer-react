@@ -14,3 +14,14 @@ function TextEditor() {
     <ReactQuill value={text} onChange={handleTextChange} />
   );
 }
+
+function Editor() {
+  return (
+    <div>
+      <h1>Text Editor</h1>
+      <TextEditor />
+    </div>
+  );
+}
+
+export default Editor;
