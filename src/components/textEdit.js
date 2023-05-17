@@ -9,12 +9,20 @@ function TextEditor() {
   const handleTextChange = (value) => {
     setText(value);
   };
+  const editorStyles = {
+    minHeight: '200px',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    padding: '10px',
+    fontSize: '16px',
+    margin:'10px'
+    
+  };
 
   return (
-    <ReactQuill value={text} onChange={handleTextChange} />
+    <ReactQuill value={text} style={editorStyles} onChange={handleTextChange} />
   );
 }
-
 function Editor() {
   return (
     <div>
