@@ -42,43 +42,39 @@ function TextEditor() {
 
   const getElementBeforeCursorPosition = () => {
     const editor = editorRef.current;
-    if (!editor) return;
+    if (!editor) return null;
 
     const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0) return;
+    if (!selection || selection.rangeCount === 0) return null;
 
     const range = selection.getRangeAt(0);
     const node = range.startContainer;
 
     if (node.nodeType === Node.TEXT_NODE) {
-      const previousNode = node.previousSibling;
-      if (previousNode) {
-        return previousNode.parentNode;
+      const previousSibling = node.previousSibling;
+      if (previousSibling) {
+        return previousSibling;
       }
+      return node.parentNode;
     }
 
-    const previousSibling = node.previousSibling;
-    if (previousSibling) {
-      return previousSibling;
+    const previousNode = node.previousSibling;
+    if (previousNode) {
+      return previousNode;
     }
 
-    const parentNode = node.parentNode;
-    if (parentNode) {
-      return parentNode;
-    }
-
-    return null;
+    return node.parentNode;
   };
-    
+
   const editorStyles = {
     minHeight: '200px',
     border: '1px solid #ccc',
     borderRadius: '4px',
     padding: '10px',
     fontSize: '16px',
-    margin:'10px'
-    
+    margin: '10px'
   };
+
   return (
     <div>
       <ReactQuill
@@ -108,6 +104,5 @@ function Editor() {
     </div>
   );
 }
-
 
 export default Editor;
