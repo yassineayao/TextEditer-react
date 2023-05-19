@@ -20,34 +20,48 @@ function TextEditor() {
     return selection.index;
   };
 
+ 
   const getElementAtCursorPosition = () => {
-    const editor = editorRef.current.getEditor();
+    const editor = editorRef.current;
     if (!editor) return null;
-
     const cursorPosition = getCursorPosition();
     if (cursorPosition === -1) return null;
-
-    const element = editor.getLine(cursorPosition);
-    return element;
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return null;
+  
+    const range = selection.getRangeAt(0);
+    const node = range.startContainer;
+  
+    if (node.nodeType === Node.TEXT_NODE) {
+      return node.parentNode;
+    }
+  
+    return node;
   };
-
+    
+  
   const getElementBeforeCursorPosition = () => {
     const editor = editorRef.current.getEditor();
     if (!editor) return null;
-
+  
     const cursorPosition = getCursorPosition();
     if (cursorPosition === -1) return null;
-
-    const element = editor.getLine(cursorPosition - 1);
-    return element;
+  
+    const lineIndex = editor.getLine(cursorPosition - 1);
+    const lineText = editor.getText(lineIndex);
+  
+    if (lineText) {
+      return lineText;
+    }
+  
+    return null;
   };
-
   const getSelectedText = () => {
     const editor = editorRef.current.getEditor();
     if (!editor) return '';
 
     const selection = editor.getSelection();
-    if (!selection || !selection.length) return '';
+    if (!selection || !selection.length) return null;
 
     return editor.getText(selection.index, selection.length);
   };
