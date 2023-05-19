@@ -11,104 +11,66 @@ function TextEditor() {
   };
 
   const getCursorPosition = () => {
-    const editor = editorRef.current;
+    const editor = editorRef.current.getEditor();
     if (!editor) return -1;
 
-    const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0) return -1;
+    const selection = editor.getSelection();
+    if (!selection || !selection.index) return -1;
 
-    const range = selection.getRangeAt(0);
-    const offset = range.startOffset;
-
-    return offset;
+    return selection.index;
   };
 
   const getElementAtCursorPosition = () => {
-    const editor = editorRef.current;
+    const editor = editorRef.current.getEditor();
     if (!editor) return null;
 
-    const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0) return null;
+    const cursorPosition = getCursorPosition();
+    if (cursorPosition === -1) return null;
 
-    const range = selection.getRangeAt(0);
-    const node = range.startContainer;
-
-    if (node.nodeType === Node.TEXT_NODE) {
-      return node.parentNode;
-    }
-
-    return node;
+    const element = editor.getLine(cursorPosition);
+    return element;
   };
 
   const getElementBeforeCursorPosition = () => {
-    const editor = editorRef.current;
+    const editor = editorRef.current.getEditor();
     if (!editor) return null;
 
-    const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0) return null;
+    const cursorPosition = getCursorPosition();
+    if (cursorPosition === -1) return null;
 
-    const range = selection.getRangeAt(0);
-    const node = range.startContainer;
-
-    if (node.nodeType === Node.TEXT_NODE) {
-      const previousSibling = node.previousSibling;
-      if (previousSibling) {
-        return previousSibling;
-      }
-      return node.parentNode;
-    }
-
-    const previousNode = node.previousSibling;
-    if (previousNode) {
-      return previousNode;
-    }
-
-    return node.parentNode;
+    const element = editor.getLine(cursorPosition - 1);
+    return element;
   };
 
   const getSelectedText = () => {
-    const selection = window.getSelection();
-    if (selection && selection.toString()) {
-      return selection.toString();
-    }
-    return '';
+    const editor = editorRef.current.getEditor();
+    if (!editor) return '';
+
+    const selection = editor.getSelection();
+    if (!selection || !selection.length) return '';
+
+    return editor.getText(selection.index, selection.length);
   };
 
   const replaceSelectedText = (newText) => {
-    const selection = window.getSelection();
-    if (selection && selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0);
-      range.deleteContents();
-      range.insertNode(document.createTextNode(newText));
-    }
+    const editor = editorRef.current.getEditor();
+    if (!editor) return;
+
+    const selection = editor.getSelection();
+    if (!selection || !selection.length) return;
+
+    editor.deleteText(selection.index, selection.length);
+    editor.insertText(selection.index, newText);
   };
 
   const insertTextAtCursorPosition = (newText) => {
-    const editor = editorRef.current;
+    const editor = editorRef.current.getEditor();
     if (!editor) return;
 
-    const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0) return;
+    const selection = editor.getSelection();
+    if (!selection || !selection.length) return;
 
-    const range = selection.getRangeAt(0);
-    const node = range.startContainer;
-
-    if (node.nodeType === Node.TEXT_NODE) {
-      const text = node.nodeValue;
-      const before = text.slice(0, range.startOffset);
-      const after = text.slice(range.startOffset);
-      const updatedText = before + newText + after;
-      const updatedRange = document.createRange();
-      updatedRange.setStart(node, range.startOffset);
-      updatedRange.setEnd(node, range.startOffset + newText.length);
-      range.deleteContents();
-      range.insertNode(document.createTextNode(updatedText));
-      selection.removeAllRanges();
-      selection.addRange(updatedRange);
-    } else {
-      const textNode = document.createTextNode(newText);
-      range.insertNode(textNode);
-    }
+    editor.insertText(selection.index, newText);
   };
 
   const editorStyles = {
@@ -117,15 +79,33 @@ function TextEditor() {
     borderRadius: '4px',
     padding: '10px',
     fontSize: '16px',
-    margin: '10px'
+    margin: '10px',
+  };
+  const editorModules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+      ['blockquote', 'code-block'],
+      [{ header: 1 }, { header: 2 }], // custom button values
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+      [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+      [{ direction: 'rtl' }], // text direction
+      [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      [{ color: [] }, { background: [] }], // dropdown with defaults
+      [{ font: [] }],
+      [{ align: [] }],
+      ['clean'], // remove formatting button
+    ],
   };
 
   return (
     <div>
       <ReactQuill
         value={text}
-        style={editorStyles}
         onChange={handleTextChange}
+        modules={editorModules}
+        style={editorStyles}
         ref={editorRef}
       />
       <button onClick={() => console.log(getCursorPosition())}>
