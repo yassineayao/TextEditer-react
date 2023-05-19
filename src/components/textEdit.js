@@ -78,14 +78,40 @@ function TextEditor() {
   };
 
   const insertTextAtCursorPosition = (newText) => {
-    const editor = editorRef.current.getEditor();
+    const editor = editorRef.current;
     if (!editor) return;
-
-    const selection = editor.getSelection();
-    if (!selection || !selection.length) return;
-
-    editor.insertText(selection.index, newText);
+  
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return;
+  
+    const range = selection.getRangeAt(0);
+    const node = range.startContainer;
+  
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.nodeValue;
+      const before = text.slice(0, range.startOffset);
+      const after = text.slice(range.startOffset);
+      const updatedText = before + newText + after;
+      const updatedRange = document.createRange();
+  
+      if (range.startOffset > text.length) {
+        updatedRange.setStart(node, text.length);
+        updatedRange.setEnd(node, text.length);
+      } else {
+        updatedRange.setStart(node, range.startOffset);
+        updatedRange.setEnd(node, range.startOffset);
+      }
+  
+      range.deleteContents();
+      range.insertNode(document.createTextNode(updatedText));
+      selection.removeAllRanges();
+      selection.addRange(updatedRange);
+    } else {
+      const textNode = document.createTextNode(newText);
+      range.insertNode(textNode);
+    }
   };
+  
 
   const editorStyles = {
     minHeight: '200px',
