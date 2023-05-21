@@ -45,17 +45,20 @@ function TextEditor() {
     if (!editor) return null;
   
     const cursorPosition = getCursorPosition();
-    if (cursorPosition === -1) return null;
+    if (cursorPosition <= 1) return null;
   
-    const lineIndex = editor.getLine(cursorPosition - 1);
+    const lineIndex = editor.getLine(cursorPosition - 2); // Adjusted to get the previous line
     const lineText = editor.getText(lineIndex);
   
     if (lineText) {
-      return lineText;
+      const elements = lineText.split(' ');
+      const lastElementIndex = elements.length - 1;
+      return elements[lastElementIndex];
     }
   
     return null;
   };
+  
   const getSelectedText = () => {
     const editor = editorRef.current.getEditor();
     if (!editor) return '';
