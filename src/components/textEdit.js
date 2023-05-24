@@ -13,7 +13,6 @@ function TextEditor() {
   const getCursorPosition = () => {
     const editor = editorRef.current.getEditor();
     if (!editor) return -1;
-
     const selection = editor.getSelection();
     if (!selection || !selection.index) return -1;
 
@@ -132,24 +131,26 @@ function TextEditor() {
         style={editorStyles}
         ref={editorRef}
       />
-      <button onClick={() => console.log(getCursorPosition())}>
-        Get Cursor Position
-      </button>
-      <button onClick={() => console.log(getElementAtCursorPosition())}>
-        Get Element at Cursor Position
-      </button>
-      <button onClick={() => console.log(getElementBeforeCursorPosition())}>
-        Get Element Before Cursor Position
-      </button>
-      <button onClick={() => console.log(getSelectedText())}>
-        Get Selected Text
-      </button>
-      <button onClick={() => replaceSelectedText('New Text')}>
-        Replace Selected Text
-      </button>
-      <button onClick={() => insertTextAtCursorPosition('Inserted Text')}>
-        Insert Text at Cursor Position
-      </button>
+        <div class="flex mt-4 justify-start flex-wrap">
+        <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => console.log(getCursorPosition())}>
+          Get Cursor Position
+        </button>
+        <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => console.log(getElementAtCursorPosition())}>
+          Get Element at Cursor Position
+        </button>
+        <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => console.log(getElementBeforeCursorPosition())}>
+          Get Element Before Cursor Position
+        </button>
+        <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => console.log(getSelectedText())}>
+          Get Selected Text
+        </button>
+        <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => replaceSelectedText('New Text')}>
+          Replace Selected Text
+        </button>
+        <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => insertTextAtCursorPosition('Inserted Text')}>
+          Insert Text at Cursor Position
+        </button>
+      </div>
     </div>
   );
 }
