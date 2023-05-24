@@ -10,7 +10,7 @@ function sideBar(){
         <textarea
           type="text"
           placeholder="send a message"
-          class="text-[15px] ml-4 w-full bg-transparent focus:outline-none"
+          class="m-0 w-full resize-none border-0 bg-transparent p-0  focus:ring-0 focus-visible:ring-0 dark:bg-transparent pl-2 md:pl-0 focus:outline-none max-h-200 h-24 overflow-y-hidden"
         />
       </div>
     </div>

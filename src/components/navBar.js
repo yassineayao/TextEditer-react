@@ -15,12 +15,13 @@ function navBar(){
           Logo Here. */}
         </a>
         {/* <!-- Nav Links --> */}
-        <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-          <li><a class="hover:text-gray-200" href="#">Home</a></li>
-          <li><a class="hover:text-gray-200" href="#">Catagory</a></li>
-          <li><a class="hover:text-gray-200" href="#">Collections</a></li>
-          <li><a class="hover:text-gray-200" href="#">Contact Us</a></li>
-        </ul>
+        <div class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
+          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" >outline</button>
+          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" >paragraph</button>
+          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" >image</button>
+          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" >rephrase</button>
+          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" >export</button>
+        </div>
         {/* <!-- Header Icons --> */}
         
       </div>
