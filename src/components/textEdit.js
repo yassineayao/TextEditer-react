@@ -158,7 +158,7 @@ function TextEditor() {
 function Editor() {
   return (
     <div>
-      <h1>Text Editor</h1>
+      <h1 class="text-center text-4xl mt-3 text-bold">Text Editor</h1>
       <TextEditor />
     </div>
   );
