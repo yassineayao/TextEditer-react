@@ -1,11 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useEffect, useContext } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { AppContext } from './AppContext';
+
 
 function TextEditor() {
   const [text, setText] = useState('');
   const editorRef = useRef(null);
-
+  const { state } = useContext(AppContext);
   const handleTextChange = (value) => {
     setText(value);
   };
@@ -121,7 +123,14 @@ function TextEditor() {
       ['clean'], // remove formatting button
     ],
   };
+  
+  useEffect(() => {
+    // Use the state in a useEffect hook
+    console.log('State changed in Youssef:', state);
 
+ 
+    insertTextAtCursorPosition("Hello");
+  }, [state]);
   return (
     <div>
       <ReactQuill
@@ -152,12 +161,13 @@ function TextEditor() {
         </button>
       </div>
     </div>
+
   );
 }
 
 function Editor() {
   return (
-    <div>
+    <div class="h-screen">
       <h1 class="text-center text-4xl mt-3 font-bold">Text Editor</h1>
       <TextEditor />
     </div>
