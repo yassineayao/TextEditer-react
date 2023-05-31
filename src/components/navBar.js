@@ -4,17 +4,32 @@ import { AppContext } from './AppContext';
 
 function NavBar(){
   const { state, setState } = useContext(AppContext);
-  // const { otherState, setOtherState } = useContext(OtherContext);
+  
 
-  const handleButtonClick = () => {
+  const handleOutlineClick = () => {
     // Update the state when the button is clicked
   
-    setState('youssef');
+    setState('outline');
   };
-  const handleClick = () => {
+  const handleParagraphClick = () => {
     // Update the state when the button is clicked
-  
-    // setOtherState ('youssef');
+    setState('paragraph');
+    
+  };
+  const handleImageClick = () => {
+    // Update the state when the button is clicked
+    setState('image');
+    
+  };
+  const handleRephrasClick = () => {
+    // Update the state when the button is clicked
+    setState('refrase');
+    
+  };
+  const handleExportClick = () => {
+    // Update the state when the button is clicked
+    setState('export');
+    
   };
 
   return(
@@ -32,11 +47,11 @@ function NavBar(){
         </a>
         {/* <!-- Nav Links --> */}
         <div class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" onClick={handleButtonClick}>outline</button>
-          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" onClick={handleClick}>paragraph</button>
-          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" >image</button>
-          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" >rephrase</button>
-          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" >export</button>
+          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" onClick={handleOutlineClick}>outline</button>
+          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" onClick={handleParagraphClick}>paragraph</button>
+          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900"onClick={handleImageClick} >image</button>
+          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" onClick={handleRephrasClick}>rephrase</button>
+          <button  class="bg-white  hover:bg-gray-100 text-xs m-3 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-gray-900" onClick={handleExportClick}>export</button>
         </div>
         {/* <!-- Header Icons --> */}
         
